@@ -21,9 +21,7 @@ public class PinotQuery {
         String base64Credentials = new String(Base64.getEncoder().encode(plainCredentials.getBytes()));
 
         // Create authorization header
-        String authorizationHeader = "Basic " + base64Credentials;
-        Properties connectionProperties = new Properties();
-        connectionProperties.setProperty("headers.Authorization", authorizationHeader);
+        Properties connectionProperties = getProperties(base64Credentials);
 
         // Register new Pinot JDBC driver
         DriverManager.registerDriver(new PinotDriver());
@@ -39,5 +37,20 @@ public class PinotQuery {
             String result = rs.getString("count(*)");
             System.out.println(result);
         }
+    }
+
+    private static Properties getProperties(String base64Credentials) {
+        String authorizationHeader = "Basic " + base64Credentials;
+        Properties connectionProperties = new Properties();
+        connectionProperties.setProperty("headers.Authorization", authorizationHeader);
+
+        // TLS is mandatory for Pinot JDBC driver version 1.1 and later
+        connectionProperties.setProperty("pinot.jdbc.tls.keystore.path", "/etc/ssl/certs/java/cacerts");
+        connectionProperties.setProperty("pinot.jdbc.tls.keystore.password", "changeit");
+        connectionProperties.setProperty("pinot.jdbc.tls.keystore.type", "JKS");
+        connectionProperties.setProperty("pinot.jdbc.tls.truststore.path", "/etc/ssl/certs/java/cacerts");
+        connectionProperties.setProperty("pinot.jdbc.tls.truststore.password", "changeit");
+        connectionProperties.setProperty("pinot.jdbc.tls.truststore.type", "JKS");
+        return connectionProperties;
     }
 }
