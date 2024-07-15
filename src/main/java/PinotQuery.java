@@ -12,9 +12,9 @@ public class PinotQuery {
         // Load environment variables from .env file
         Dotenv dotenv = Dotenv.load();
 
-        String dbUrl = dotenv.get("DB_URL");
-        String username = dotenv.get("USERNAME");
-        String password = dotenv.get("PASSWORD");
+        String dbUrl = dotenv.get("PINOT_URL");
+        String username = dotenv.get("PINOT_USERNAME");
+        String password = dotenv.get("PINOT_PASSWORD");
 
         // Concatenate username and password and use base64 to encode the concatenated string
         String plainCredentials = username + ":" + password;
