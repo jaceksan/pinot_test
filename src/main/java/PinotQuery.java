@@ -47,10 +47,6 @@ public class PinotQuery {
         // TLS is mandatory for Pinot JDBC driver version 1.1 and later
         connectionProperties.setProperty("pinot.jdbc.tls.keystore.path", "/etc/ssl/certs/java/cacerts");
         connectionProperties.setProperty("pinot.jdbc.tls.keystore.password", "changeit");
-        connectionProperties.setProperty("pinot.jdbc.tls.keystore.type", "JKS");
-        connectionProperties.setProperty("pinot.jdbc.tls.truststore.path", "/etc/ssl/certs/java/cacerts");
-        connectionProperties.setProperty("pinot.jdbc.tls.truststore.password", "changeit");
-        connectionProperties.setProperty("pinot.jdbc.tls.truststore.type", "JKS");
         return connectionProperties;
     }
 }
