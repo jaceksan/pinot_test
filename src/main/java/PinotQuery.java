@@ -45,7 +45,9 @@ public class PinotQuery {
         connectionProperties.setProperty("headers.Authorization", authorizationHeader);
 
         // TLS is mandatory for Pinot JDBC driver version 1.1 and later
-        connectionProperties.setProperty("pinot.jdbc.tls.keystore.path", "/etc/ssl/certs/java/cacerts");
+        String javaHome = System.getenv("JAVA_HOME");
+        String keystorePath = javaHome + "/lib/security/cacerts";
+        connectionProperties.setProperty("pinot.jdbc.tls.keystore.path", keystorePath);
         connectionProperties.setProperty("pinot.jdbc.tls.keystore.password", "changeit");
         return connectionProperties;
     }
